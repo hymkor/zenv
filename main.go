@@ -10,6 +10,8 @@ import (
 
 var flagDllDir = flag.String("L", "", "Set DLL Directory (Seperate with "+string(os.PathListSeparator)+")")
 
+var flagChdir = flag.String("C", "", "Set current working directory")
+
 func mains(args []string) (int, error) {
 	for len(args) > 0 {
 		equalPos := strings.IndexByte(args[0], '=')
@@ -26,6 +28,12 @@ func mains(args []string) (int, error) {
 	if *flagDllDir != "" {
 		if err := addDllDirectories(strings.Split(*flagDllDir, string(os.PathListSeparator))...); err != nil {
 			return 1, nil
+		}
+	}
+
+	if *flagChdir != "" {
+		if err := os.Chdir(*flagChdir); err != nil {
+			return 1, err
 		}
 	}
 
