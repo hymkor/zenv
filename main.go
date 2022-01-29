@@ -22,6 +22,8 @@ func mains(args []string) (int, error) {
 		args = args[1:]
 	}
 	if len(args) <= 0 {
+		fmt.Fprintln(os.Stderr, "Usage: zenv {options..} {ENVNAME=VALUE...} COMMAND {ARGS...}")
+		flag.PrintDefaults()
 		return 0, nil
 	}
 
