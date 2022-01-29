@@ -1,11 +1,14 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
 )
+
+var flagDllDir = flag.String("L", "", "Set DLL Directory (Seperate with "+string(os.PathListSeparator)+")")
 
 func mains(args []string) (int, error) {
 	for len(args) > 0 {
@@ -19,6 +22,13 @@ func mains(args []string) (int, error) {
 	if len(args) <= 0 {
 		return 0, nil
 	}
+
+	if *flagDllDir != "" {
+		if err := addDllDirectories(strings.Split(*flagDllDir, string(os.PathListSeparator))...); err != nil {
+			return 1, nil
+		}
+	}
+
 	cmd := exec.Command(args[0], args[1:]...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -32,7 +42,8 @@ func mains(args []string) (int, error) {
 }
 
 func main() {
-	rc, err := mains(os.Args[1:])
+	flag.Parse()
+	rc, err := mains(flag.Args())
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 	}
