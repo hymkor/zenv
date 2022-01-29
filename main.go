@@ -8,8 +8,6 @@ import (
 	"strings"
 )
 
-var flagDllDir = flag.String("L", "", "Set DLL Directory (Seperate with "+string(os.PathListSeparator)+")")
-
 var flagChdir = flag.String("C", "", "Set current working directory")
 
 func mains(args []string) (int, error) {

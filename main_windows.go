@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"syscall"
@@ -12,6 +13,8 @@ import (
 const (
 	_LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000
 )
+
+var flagDllDir = flag.String("L", "", "Set DLL directories list (seperated with "+string(os.PathListSeparator)+")")
 
 var kernel32 = windows.NewLazySystemDLL("kernel32")
 var procSetDefaultDllDirectories = kernel32.NewProc("SetDefaultDllDirectories")

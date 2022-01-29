@@ -3,6 +3,8 @@
 
 package main
 
+var flagDllDir = new(string)
+
 func addDllDirectories(dllDirectories ...string) error {
 	return nil
 }
